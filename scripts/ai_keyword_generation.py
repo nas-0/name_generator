@@ -1,14 +1,10 @@
 from openai import OpenAI
 import json
 
-from dotenv import load_dotenv
-import os
-
-# Load environment variables from .env file
-load_dotenv()
+from settings import deepseek_api_key, deep_seek_url
 
 
-client = OpenAI(api_key=os.getenv("DEEPSEEK_API_KEY"), base_url=os.getenv("DEEPSEEK_URL"))
+client = OpenAI(api_key=deepseek_api_key, base_url=deep_seek_url)
 
 prompt = "Provide 3 Romanized Hindi full names in JSON format. The response should be a valid JSON object with a key names that contains an array of objects. Each object should have first_name, last_name, and gender fields. Ensure the response can be parsed using json.loads()."
 
