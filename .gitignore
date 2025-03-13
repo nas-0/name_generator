@@ -7,3 +7,4 @@ venv/
 # Ignore private keys
 private_key
 private_key.pub
+.env
