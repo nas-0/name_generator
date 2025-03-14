@@ -1,10 +1,9 @@
 from openai import OpenAI
 import json
+from settings import deepseek_api_key, deepseek_url
 
-from settings import deepseek_api_key, deep_seek_url
 
-
-client = OpenAI(api_key=deepseek_api_key, base_url=deep_seek_url)
+client = OpenAI(api_key=deepseek_api_key, base_url=deepseek_url)
 
 prompt = "Provide 3 Romanized Hindi full names in JSON format. The response should be a valid JSON object with a key names that contains an array of objects. Each object should have first_name, last_name, and gender fields. Ensure the response can be parsed using json.loads()."
 
