@@ -3,8 +3,6 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from db_settings import db_url
 
-engine = create_engine(db_url)
-
 Base = declarative_base()
 
 class Name(Base):
@@ -17,13 +15,6 @@ class Name(Base):
     first_name_meaning = Column(String(200))
     last_name_meaning = Column(String(200))
     gender = Column(String(10), nullable=False)
-
-
-try:
-    with engine.connect() as connection:
-        print("Connected to PostgreSQL database successfully!")
-except Exception as e:
-    print(f"Error: {e}")
 
 
 engine = create_engine(db_url)
