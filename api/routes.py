@@ -1,12 +1,12 @@
 from typing import List
-from litestar import get, Router
+from litestar import Router, get, post
 from api.models.name import nameResponse
-from api.database.db_functions import get_ten_names
+from api.database import db_functions
 
 @get("/ten")
 async def get_names() -> List[nameResponse]:
 
-    response = get_ten_names("Arabic")
+    response = db_functions.get_ten_names("Arabic")
 
     name_list = []
 
@@ -14,5 +14,9 @@ async def get_names() -> List[nameResponse]:
         name_list.append(nameResponse.model_validate(name_details))
     
     return name_list
+
+@post("/")
+async def add_names(amount: str, language: str):
+    db_functions.add_names(amount, str)
 
 name_router = Router(path="/names", route_handlers=[get_names])
