@@ -1,14 +1,12 @@
 from typing import List
-from api.database.db_setup import Name
-from api.database.db_settings import engine
+from api.database.db_schema import Name
+from api.database.db_setup import session
 from sqlalchemy import select
-from sqlalchemy.orm import Session
 
 def get_ten_names(language: str) -> List[dict]: 
 
     names = []
 
-    session = Session(engine)
     statement = select(Name).where(Name.language == language)
 
     for user in session.scalars(statement):
