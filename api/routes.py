@@ -1,6 +1,6 @@
 from typing import List
 from litestar import Router, get, post
-from api.models.name import nameResponse
+from api.models.name import nameResponse, nameRequest
 from api.database import db_functions
 
 @get("/ten")
@@ -16,7 +16,11 @@ async def get_names() -> List[nameResponse]:
     return name_list
 
 @post("/")
-async def add_names(amount: str, language: str):
-    db_functions.add_names(amount, str)
+async def add_names(data: nameRequest) -> dict:
+    response = db_functions.add_names(data.amount, data.language)
 
-name_router = Router(path="/names", route_handlers=[get_names])
+    return {
+        "names_added": response
+    }
+
+name_router = Router(path="/names", route_handlers=[get_names, add_names])

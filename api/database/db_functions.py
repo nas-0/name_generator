@@ -2,6 +2,7 @@ from typing import List
 from api.database.db_schema import Name
 from api.database.db_setup import session
 from sqlalchemy import select, insert
+import traceback
 
 from api.ai_scripts.name_generation import generate_names
 
@@ -29,27 +30,35 @@ def get_ten_names(language: str) -> List[dict]:
 def add_names(amount: str, language: str, country: str = None) -> str:
     response = generate_names(amount, language).get("names", "")
 
+    print(response)
+
     if not response:
         return None
     
-    for name in response:
-        names_added = 0
+    names_added = 0
+    
+    for name_details in response:
         try:
-            statement = insert(Name).values(
-                first_name=name.get("first_name"),
-                last_name=name.get("last_name"),
-                language=name.get("language"),
-                country=name.get("country"),
-                first_name_meaning=name.get("first_name_meaning"),
-                last_name_meaning=name.get("last_name_meaning"),
-                gender=name.get("gender")
+            name = Name(
+                first_name=name_details.get("first_name"),
+                last_name=name_details.get("last_name"),
+                language=name_details.get("language"),
+                country=name_details.get("country"),
+                first_name_meaning=name_details.get("first_name_meaning"),
+                last_name_meaning=name_details.get("last_name_meaning"),
+                gender=name_details.get("gender")
                 )
+            session.add(name)
+            session.commit()
             names_added += 1
-        except:
+        except Exception as e:
+            print(e)
             print("Could not process name. Moving on...")
             continue
     
-        print(f"Added {names_added} names to the database")
+
+    print(f"Added {names_added} names to the database")
+    return names_added
 
 
 

@@ -10,3 +10,9 @@ class nameResponse(BaseModel):
     first_name_meaning: Optional[str] = Field(None)
     last_name_meaning: Optional[str] = Field(None)
     gender: str
+
+
+class nameRequest(BaseModel):
+
+    amount: str
+    language: str
