@@ -1,8 +1,7 @@
 from typing import List
 from api.database.db_schema import Name
 from api.database.db_setup import session
-from sqlalchemy import select, insert
-import traceback
+from sqlalchemy import select
 
 from api.ai_scripts.name_generation import generate_names
 
